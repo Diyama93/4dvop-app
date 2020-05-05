@@ -1,6 +1,11 @@
 - hosts: all
   become: true
-  tasks:
+  tasks: 
+    - name: install epel-release
+      yum: 
+       name: epel-release 
+       state: latest
+    
     - name: install nginx
       yum: 
         name: nginx 
@@ -45,8 +50,14 @@
        state: enabled
        immediate: yes
 
+    - name: firewalld reloaoded to apply changes
+      service:
+       name: firewalld
+       enabled: yes
+       state: reloaded
+
     - name: nginx listen 8080
-      shell: sed -i 's/80 default_server/8080 default_server/g' /etc/nginx/nginx.conf
+      shell: sed -i 's/listen       80 default_server;/listen       8080 default_server;/g' /etc/nginx/nginx.conf
       args:
        warn: no
             
