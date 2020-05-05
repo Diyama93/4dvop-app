@@ -1,4 +1,7 @@
 FROM ubuntu:latest
+ARG DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Paris
 RUN apt-get update -y && apt-get install nginx -y
 RUN apt-get install git -y
 RUN rm /var/www/html/*
